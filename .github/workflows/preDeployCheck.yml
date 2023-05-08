@@ -1,21 +1,30 @@
-name: Deploy Master
+name: Validate Deployment
 
 # Controls when the action will run. 
 on:
-  push:
+  pull_request:
     branches: master
     paths-ignore:
-        - ".github/workflows/*"
-    
-  
+      - ".github/workflows/*"
+
 jobs:
-  deploy:
+  validateCommitMessageUAT:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: Install Salesforce CLI 
+      - name: 'Running Commit Message Check'
+        run: |
+          chmod -R +x ./dxUtil
+          ./dxUtil/commitMessageChecker.sh -s "${{ github.event.pull_request.head.sha }}"
+  validateDeployUAT:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Install Salesforce CLI
         run: |
           npm install sfdx-cli -g
           pip install xq
@@ -30,8 +39,3 @@ jobs:
       - uses: sfdx-actions/setup-sfdx@v1
         with:
           sfdx-auth-url: ${{ secrets.AUTH_SECRET_SF_UAT_PARTIAL }}
-      - name: 'Running checks'
-        run: |
-          concatinatedTestClass=$(cat TestClassess)
-          chmod -R +x ./dxUtil
-          ./dxUtil/runSfdxConditionally.sh -x package/package.xml -c "--uatDeploy" -r "$concatinatedTestClass" -u ${{ secrets.USERNAME_SF_UAT_PARTIAL }} -w 240
