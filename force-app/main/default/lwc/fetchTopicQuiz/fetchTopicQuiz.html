@@ -1,0 +1,42 @@
+<template>
+    <template if:true={hideParent}>
+    <lightning-card title="Create your quiz"> 
+        <div class="slds-m-around_medium">
+            <lightning-input type="search" 
+            onchange={handleKeyChange} 
+            class="slds-m-bottom_small" 
+            label="Search" 
+            value={searchKey}
+            ></lightning-input>
+            <template if:true={flag}>
+                <template if:true={topics}>
+                    <template for:each={topics} for:item="contact">
+                        <ul class="slds-list_dotted slds-m-top_large" key={contact.Id}>
+                            <li onclick={handleClick}>{contact.Topic__c}</li>
+                        </ul>
+                    </template>
+                </template>
+            </template>
+
+            <div class="slds-float_right">
+
+            <template if:true={showButton}>
+                <lightning-button 
+                label="Create" 
+                title="Create Quiz" 
+                onclick={handleClickQuiz} 
+                class="slds-m-left_x-small">
+            </lightning-button>
+            </template>
+            </div>
+
+          
+            
+        </div>
+    </lightning-card>
+</template>
+<template if:true={showChild}>
+    <p>Child Component</p>
+    <c-create-quiz-child get-value-from-parent = {value}></c-create-quiz-child>
+</template>
+</template>

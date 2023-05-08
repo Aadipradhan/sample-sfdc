@@ -15,6 +15,8 @@ export default class QnA extends LightningElement {
     result;
     showQuizz = true;
     showResult = false;
+    progressValue;
+    incDecValue = 0;
 
 
 
@@ -32,6 +34,18 @@ export default class QnA extends LightningElement {
         this.totalQuizzDataSize = (this.quizzData.length != 0) ? this.quizzData.length : 0;
         this.displayQuesNo = (this.quizzData.length != 0) ? 1 : null
         this.nextDisabled = (this.quizzData.length == 1) ? true : false;
+        this.progressValue = 100 / this.totalQuizzDataSize;
+        this.incDecValue = 100 / this.totalQuizzDataSize;
+    }
+
+    renderedCallback() {
+        const styleElem = document.createElement("style");
+        styleElem.innerText = `c-qn-A
+    .slds-progress-bar__value {
+        background : #892db9 !important;
+    }`
+        let progressBarStyle = this.refs.progressBar;
+        if (progressBarStyle != null) progressBarStyle.appendChild(styleElem);
     }
 
     handleNext() {
@@ -39,6 +53,7 @@ export default class QnA extends LightningElement {
         this.currentQnA = this.quizzData[this.currentQnAIndex];
         this.prevDisabled = false;
         this.nextDisabled = (this.currentQnAIndex == this.totalQuizzDataSize - 1) ? true : false;
+        this.progressValue += this.incDecValue;
     }
 
     handlePrevious() {
@@ -46,6 +61,7 @@ export default class QnA extends LightningElement {
         this.currentQnA = this.quizzData[this.currentQnAIndex];
         this.nextDisabled = false;
         this.prevDisabled = (this.currentQnAIndex == 0) ? true : false;
+        this.progressValue -= this.incDecValue;
 
     }
 

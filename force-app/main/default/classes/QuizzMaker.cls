@@ -59,6 +59,13 @@ public class QuizzMaker {
         
     }
     
+    
+    @AuraEnabled(cacheable = true)
+    public static List<Account> getAccountData(String searchKey){
+        String key = '%'+searchKey+'%';
+        return [Select Id,Name,Type,Phone from Account where Name LIKE :key];
+    }
+    
     public  class quesAnsWrapper {
         @AuraEnabled public String uId;
         @AuraEnabled public String ques;

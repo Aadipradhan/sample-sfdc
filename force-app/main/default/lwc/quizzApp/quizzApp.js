@@ -1,8 +1,8 @@
-import { LightningElement, wire } from 'lwc';
+import { LightningElement} from 'lwc';
 import getQuestionAndAns from '@salesforce/apex/QuizzMaker.getQuestionSet'
 export default class QuizzApp extends LightningElement {
 
-    topic
+     topic 
     quizzData
     showQuizzData
 
@@ -14,21 +14,25 @@ export default class QuizzApp extends LightningElement {
     }
 
     handleClick(event) {
-        this.showQuizzData = false;
-        getQuestionAndAns({ topic: this.topic })
-            .then((data) => {
-                console.log('OriginalData-', data);
-                this.quizzData =  data.map((item) => {
-                    let newArr = [...item.options]
-                    let shuffledOptions = newArr.sort(() => 0.5 - Math.random())
-                     return{...item,'options':shuffledOptions}
+        console.log('Topic : ', this.topic);
+        if (this.topic != null && this.topic != '') {
+            this.showQuizzData = false;
+            getQuestionAndAns({ topic: this.topic })
+                .then((data) => {
+                    console.log('OriginalData-', data);
+                    this.quizzData = data.map((item) => {
+                        let newArr = [...item.options]
+                        let shuffledOptions = newArr.sort(() => 0.5 - Math.random())
+                        return { ...item, 'options': shuffledOptions }
+                    })
+                    console.log('quizzData[0]-', this.quizzData[0]);
+                    console.log('quizzData-', JSON.stringify(this.quizzData[0]));
+                    this.showQuizzData = true;
                 })
-                console.log('quizzData[0]-',this.quizzData[0]);
-                console.log('quizzData-',JSON.stringify(this.quizzData[0]));
-                this.showQuizzData = true;
-            })
-            .catch((error) => {
-                console.log('Error', error);
-            })
+                .catch((error) => {
+                    console.log('Error', error);
+                })
+        }
     }
+
 }

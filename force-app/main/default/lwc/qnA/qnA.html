@@ -1,5 +1,9 @@
 <template>
     <lightning-card  variant="brand"  title="Quizz" icon-name="standard:data_integration_hub">
+        <div class="slds-m-around--x-large">
+            <lightning-progress-bar lwc:ref="progressBar" class="slds-progress-bar__value_success" value={progressValue} size="large" variant="circular"></lightning-progress-bar>
+        </div>
+        
         <template if:true={showQuizz}>
         <p slot="actions" class="slds-text-heading_large">{displayQuesNo} / {totalQuizzDataSize}</p>
         <template if:true={quizzData}>

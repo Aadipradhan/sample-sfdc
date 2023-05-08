@@ -23,25 +23,10 @@ export default class Component2LMS extends LightningElement {
         console.log('MessageReceived->',message);
         console.log('Message.msg->',message.message);
         this.receivedMessage = message.message;
-
-        let obj = {
-            foo : 1,
-            foo2 : 2
-        }
-        for(let item of obj){
-            console.log('item->',item)
-        }
-
-
-
     }
     // connectedCallback(){
     //     console.log('connectedCalled');
     //     this.handleSubscribe();
     //     console.log('Subscribe');
     // }
-
-
-
-    
 }
