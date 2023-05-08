@@ -23,7 +23,7 @@ jobs:
       - name: Install sfdxGit delta
         run: |
           echo y | sfdx plugins:install sfdx-git-delta
-          sfdx sgd:source:delta --to "HEAD" --from "HEAD^" --output "."
+          sfdx sgd:source:delta --to "HEAD" --from "HEAD^"  --ignore ignorefile --output "."
           cat package/package.xml
           chmod 777 generateTestClass.sh
           ./generateTestClass.sh
@@ -34,4 +34,4 @@ jobs:
         run: |
           concatinatedTestClass=$(cat TestClassess)
           chmod -R +x ./dxUtil
-          ./dxUtil/runSfdxConditionally.sh -x package/package.xml -c "--uatDeploy" -r "$concatinatedTestClass" -u ${{ secrets.USERNAME_SF_UAT_PARTIAL }} -w 240
+          ./dxUtil/runSfdxConditionally.sh -x package/package.xml -c "--uatDeploy" -r "$concatinatedTestClass" -u ${{ secrets.USERNAME_SF_SAMPLE_DEPLOY }} -w 240
