@@ -1,0 +1,41 @@
+name: Validate Deployment
+
+# Controls when the action will run. 
+on:
+  pull_request:
+    branches: sample-sfdc
+    paths-ignore:
+      - ".github/workflows/*"
+
+jobs:
+  validateCommitMessageUAT:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: 'Running Commit Message Check'
+        run: |
+          chmod -R +x ./dxUtil
+          ./dxUtil/commitMessageChecker.sh -s "${{ github.event.pull_request.head.sha }}"
+  validateDeployUAT:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Install Salesforce CLI
+        run: |
+          npm install sfdx-cli -g
+          pip install xq
+          pip install yq
+      - name: Install sfdxGit delta
+        run: |
+          echo y | sfdx plugins:install sfdx-git-delta
+          sfdx sgd:source:delta --to "HEAD" --from "HEAD^"  --ignore ignorefile --output "."
+          cat package/package.xml
+          chmod 777 generateTestClass.sh
+          ./generateTestClass.sh
+      - uses: sfdx-actions/setup-sfdx@v1
+        with:
+          sfdx-auth-url: ${{ secrets.AUTH_SECRET_SF_UAT_PARTIAL }}
