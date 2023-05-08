@@ -3,7 +3,7 @@ name: Deploy Master
 # Controls when the action will run. 
 on:
   push:
-    branches: sample-sfdc
+    branches: master
     paths-ignore:
         - ".github/workflows/*"
     
