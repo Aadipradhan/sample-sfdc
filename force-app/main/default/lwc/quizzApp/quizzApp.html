@@ -1,0 +1,15 @@
+<template>
+   <div style="display: flex; margin-bottom: 1%">
+            <lightning-input type="text"  onchange={handleInputTopic} placeholder="Enter topic" value={topic} style="width:25%; margin-right: 1%"></lightning-input>
+      
+           <lightning-button label="Make Quizz" variant="brand" onclick={handleClick} style="margin-top: 1.25%"></lightning-button>
+    </div>
+   
+    
+
+    <template if:true={showQuizzData}>
+    <c-qn-a quizz-data={quizzData}></c-qn-a>
+    </template>
+
+
+</template>
