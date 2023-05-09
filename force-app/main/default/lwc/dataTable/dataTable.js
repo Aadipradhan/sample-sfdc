@@ -34,7 +34,9 @@ export default class DataTable extends LightningElement {
             console.error('Error from fetching data',error)
         }
     }
-
+    connectedCallback(){
+        console.log('Test OK');
+    }
     handleSearch(event){
         let value = event.target.value;
         clearTimeout(this.timeout); 
