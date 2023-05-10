@@ -35,7 +35,8 @@ export default class DataTable extends LightningElement {
         }
     }
     connectedCallback(){
-        console.log('Test OK');
+        console.log('Test OK 1');
+        console.log('Test OK 2');
     }
     handleSearch(event){
         console.log('Added the log to test');
