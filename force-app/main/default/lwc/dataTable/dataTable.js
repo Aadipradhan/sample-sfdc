@@ -38,6 +38,7 @@ export default class DataTable extends LightningElement {
         console.log('Test OK');
     }
     handleSearch(event){
+        console.log('Added the log to test');
         let value = event.target.value;
         clearTimeout(this.timeout); 
         this.timeout = setTimeout(() => {   
