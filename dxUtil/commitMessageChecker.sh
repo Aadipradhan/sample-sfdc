@@ -16,11 +16,11 @@ echo "Hash value -> $hash"
 authEmail=$(git log --format='%ae' $hash^!)
 echo "Author value -> $authEmail"
 while true; do
-  if [[ "$authEmail" =~ ^[a-zA-Z0-9_.+-]+@(([a-zA-Z0-9-]+\.)?[a-zA-Z]+\.)?byjus\.com$ ]]; then
-    echo "Byjus Email detected $authEmail"
+  if [[ "$authEmail" =~ ^[a-zA-Z0-9_.+-]+@(([a-zA-Z0-9-]+\.)?[a-zA-Z]+\.)?infobeans\.com$ ]]; then
+    echo "InfoBeans Email detected $authEmail"
     commitMessage="$(git show-branch --no-name $hash)"
     echo "Commit message is -> $commitMessage"
-    if [[ "$commitMessage" =~ ^SFDC-+|SFTNL-+ ]]; then
+    if [[ "$commitMessage" =~ ^SFDC-+ ]]; then
       echo "Commit message looks good $commitMessage"
       exit 0
     else

@@ -18,6 +18,34 @@ jobs:
   #       run: |
   #         chmod -R +x ./dxUtil
           # ./dxUtil/commitMessageChecker.sh -s "${{ github.event.pull_request.head.sha }}"
+  # validatePMDChecks:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #       with:
+  #         fetch-depth: 0
+  #     - name: Install Salesforce CLI
+  #       run: |
+  #         npm install sfdx-cli -g
+  #         pip install xq
+  #         pip install yq
+  #     - name: Install sfdxGit delta
+  #       run: |
+  #         echo y | sfdx plugins:install sfdx-git-delta
+  #         mkdir pmdSources
+  #         sfdx sgd:source:delta --to "HEAD" --from "HEAD^"  --ignore ignorefile --output pmdSources/ --generate-delta
+  #     - name: PMD Scan
+  #       run: |
+  #         chmod -R +x pmd
+  #         # Install PMD
+  #         pmd/pmd_install.sh
+  #         # Run pmd source scanner
+  #         pmd/pmd_scan.sh
+  #     - uses: actions/upload-artifact@v2
+  #       if: failure()
+  #       with:
+  #         name: pmd-results
+  #         path: pmd/results
   validateDeployUAT:
     runs-on: ubuntu-latest
     steps:
